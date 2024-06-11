@@ -26,3 +26,35 @@ def add_book():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
+
+@api.route("/books/<int:id>", methods=["DELETE"])
+def delete_book(id):
+    try:
+        book = Book.query.get(id)
+        if not book:
+            return jsonify({"error": "Book doesn't exist"}), 404
+        db.session.delete(book)
+        db.session.commit()
+        return jsonify({"msg": "Book deleted"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@api.route("/books/<int:id>", methods=["PATCH"])
+def update_book(id):
+    try:
+        book = Book.query.get(id)
+        if not book:
+            return jsonify({"error": "Book not found"}), 404
+        data = request.json
+        book.description = data.get("description", book.description)
+        book.personal_rating = data.get(
+            "personal_rating", book.personal_rating)
+
+        db.session.commit()
+        return jsonify(book.to_json()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500

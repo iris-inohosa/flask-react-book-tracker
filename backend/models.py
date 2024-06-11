@@ -14,7 +14,7 @@ class Book(db.Model):
     genre = db.Column(db.String(50), nullable=True)
     description = db.Column(db.Text, nullable=True)
     rating = db.Column(db.Float, nullable=True)
-    personal_rating = db.Column(db.Float, nullable=False)
+    personal_rating = db.Column(db.Float, default=0.0)
     img_url = db.Column(
         db.String(300), default="https://img.icons8.com/plasticine/100/book.png")
 
