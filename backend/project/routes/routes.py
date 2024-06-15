@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from models import Book, db
+from backend.project.models import Book, db
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
