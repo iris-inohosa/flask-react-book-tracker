@@ -1,17 +1,17 @@
 from flask import request, jsonify, Blueprint
-from backend.project.models import Book, db
+from project import db
+from project.models import Book
+from . import books_api
 
-api = Blueprint("api", __name__, url_prefix="/api")
 
-
-@api.route("/books", methods=["GET"])
+@books_api.route("/books", methods=["GET"])
 def get_books():
     books = Book.query.all()
     result = [book.to_json() for book in books]
     return jsonify(result)
 
 
-@api.route("/books", methods=["POST"])
+@books_api.route("/books", methods=["POST"])
 def add_book():
     try:
         book = request.json
@@ -28,7 +28,7 @@ def add_book():
         return jsonify({"error": str(e)}), 500
 
 
-@api.route("/books/<int:id>", methods=["DELETE"])
+@books_api.route("/books/<int:id>", methods=["DELETE"])
 def delete_book(id):
     try:
         book = Book.query.get(id)
@@ -42,7 +42,7 @@ def delete_book(id):
         return jsonify({"error": str(e)}), 500
 
 
-@api.route("/books/<int:id>", methods=["PATCH"])
+@books_api.route("/books/<int:id>", methods=["PATCH"])
 def update_book(id):
     try:
         book = Book.query.get(id)

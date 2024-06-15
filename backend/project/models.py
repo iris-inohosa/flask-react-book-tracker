@@ -1,10 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
 import datetime
 
-db = SQLAlchemy()
+from project import db
 
 
 class Book(db.Model):
+    """
+    Class that represents the Book that has been read
+    Contains following attributes:
+        * title - book title
+        
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     isbn = db.Column(db.String(100), nullable=True)
