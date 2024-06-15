@@ -1,4 +1,4 @@
-from models import Book
+from project.models import Book
 
 
 def test_new_book():
